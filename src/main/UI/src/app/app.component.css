@@ -1,0 +1,38 @@
+*{}
+
+
+.nav-container{
+    height: 100px;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-around;
+}
+.nav-elements{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.nav-logo{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
+@media (max-width: 375px) {
+    .nav-logo{
+        padding-bottom: 10px;
+        padding-top: 10px;
+        width: 50px;
+    }
+    
+}
+
+@media (max-width: 758px) {
+    .nav-logo{
+        padding-bottom: 10px;
+        padding-top: 10px;
+        width: 50px;
+    }
+
+    
+}

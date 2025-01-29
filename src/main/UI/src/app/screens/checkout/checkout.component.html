@@ -1,0 +1,167 @@
+
+<div class="main-container">
+    <mat-stepper linear #stepper (selectionChange)="onSelectionChange($event)">
+        <ng-template matStepperIcon="edit">&#9998;</ng-template>
+<!------Player Details: Step 1------------------>
+        <mat-step [stepControl]="checkoutFormGroup"  label="Player Details" errorMessage="Details required">
+            <h1 class="step-1-header">Player Information</h1>
+            <form [formGroup]="checkoutFormGroup" class="step-1-form">
+                <div formGroupName="playerInformation" class="p-form-area">
+                    <mat-form-field>
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Telephone</mat-label>
+                        <input matInput formControlName="phone" required>
+                    </mat-form-field>
+                    <div class="step-1-rail">
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+
+<!------Addon Customization: Step 2------------------>
+        <mat-step [stepControl]="checkoutFormGroup" labale="Addon">
+        <div class="step-2-main-container">
+            <h1 class="step-2-header">Customize your Reservation</h1>
+            <p class="step-2-p">Add any additional players and golfing addons you'll be playing with bellow.</p>
+
+<!------------------------| Additional Players Widget |----------------------------------------->
+            <form class="player-form" [formGroup]="checkoutFormGroup">
+                <ng-template matStepLabel >Addons</ng-template>
+                <div class="player-container">
+
+                        <h2 class="player-container-title">Additional Players:</h2>
+
+                    <div class="player-controller">
+                        <button class="btn-d" (click)="decrementPlayerCount()">&lt;</button>
+                        <h2>{{ playerCount }}</h2>
+                        <button class="btn-d" (click)="incrementPlayerCount()">&gt;</button>
+                    </div>
+                </div>
+            </form>
+
+<!------------------------| Addon Widget |----------------------------------------------------->
+            <form  class="addon-form"[formGroup]="checkoutFormGroup">
+                <ng-template matStepLabel>Addons</ng-template>
+                <div class="main-addon-container">
+                    <div class="a-container">
+                        <h2>Addons:</h2>
+                        <button class="br-50"(click)="addCartItem()">+</button>
+                    </div>
+
+                    <div *ngIf="cartItems.length > 0">
+                        <div class="addon-container" *ngFor="let item of cartItems">
+                            <button class="br-50" (click)="removeCartItem(item)">-</button>
+                            <mat-form-field class="addon-input">
+                                <mat-label>Addon</mat-label>
+                                <mat-select matNativeControl required>
+                                        <mat-option *ngFor="let addon of addons" [disabled]="isDisabled(addon)" value="addon.name" required (click)="onAddonSelection(addon, item)">{{ addon.name }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="addon-controller">
+                                <button class="btn-d btn-a" (click)="decrementItemQuantity(item)">&lt;</button>
+                                <h2>{{ item.quantity }}</h2>
+                                <button class="btn-d btn-a" (click)="incrementItemQuantity(item)">&gt;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="step-3-rail">
+                <button class="btn-confirm" (click)="computeTotals()" mat-button matStepperNext>Next</button>
+                <button class="btn-cancel"  mat-button matStepperPrevious>Back</button>
+            </div>
+        </div>
+        </mat-step>
+
+<!------Review Summary: Step 3------------------>
+        <mat-step labale="Summary">
+            <ng-template matStepLabel>Review</ng-template>
+            <h1 class="r-header">Review</h1>
+
+            <div class="r-container">
+
+                <div class="r-1">
+                    <h2 class="r-1-title">{{course.courseName}}</h2>
+                    <div class="r-1-date">
+                        <h2 class="r-1-date-time">{{ teeTime.startTime | date:'h:mm a'}}</h2>
+                        <h2 class="r-1-date-date">{{ teeTime.startTime | date:'EEEE, MMMM d, y' }}</h2>
+                    </div>
+                    <div class="r-1-td">
+                        <div class="r-1-td-col1">
+                            <h2 class="r-1-td-col1-row1">Holes</h2>
+                            <h2 class="r-1-td-col1-row2">{{ teeTime.holeCount }}</h2>
+                        </div>
+                        <div class="r-1-td-col2">
+                            <h2 class="r-1-td-col2-row1">Players</h2>
+                            <h2 class="r-1-td-col2-row2">{{ playerCount + 1}}</h2>
+                        </div>
+                    </div>
+                </div>
+
+
+                <table class="r-2">
+                    <tr class="r-2-row1">
+                        <th class="align-left">Price Summary</th>
+                        <th class="align-end">Price</th>
+                    </tr>
+                    <tr class="r-2-row2">
+                        <td>Course Daylight {{ teeTime.holeCount }}</td>
+                        <td class="align-end">{{ teeTime.unitPrice | currency: "USD"}} X {{playerCount + 1}}</td>
+                    </tr>
+                    <tr *ngFor="let item of cartItems">
+                        <td>{{ item.description | uppercase}}</td>
+                        <td class="align-end">{{ item.unitPrice | currency: "USD" }} X {{ item.quantity }}</td>
+                    </tr>
+                    <tr class="r-2-row3">
+                        <td>Sub Total</td>
+                        <td class="align-end">{{ subTotal | currency: "USD" }}</td>
+                    </tr>
+                    <tr class="r-2-row4">
+                        <td>Total Tax</td>
+                        <td class="align-end">{{ taxTotal | currency: "USD"}}</td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr class="r-2-row5">
+                        <td><strong>Total</strong></td>
+                        <td class="align-end"><strong>{{ finalTotal | currency: "USD"}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                </table>
+                <table class="r-3">
+                    <tr>
+                        <td>Due at Course</td>
+                        <td class="align-end"><strong>{{ finalTotal | currency: "USD"}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Due Now</td>
+                        <td class="align-end"><strong>{{ 0 | currency: "USD"}}</strong></td>
+                    </tr>
+                </table>
+            <div class="step-3-rail">
+                <button  mat-button (click)="onSubmit()" class="btn-confirm">CONFIRM</button>
+                <button mat-button class="btn-cancel" (click)="resetTotals()" matStepperPrevious>BACK</button>
+            </div>
+            </div>
+        </mat-step>
+
+    </mat-stepper>
+
+</div>

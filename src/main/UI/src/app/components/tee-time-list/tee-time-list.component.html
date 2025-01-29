@@ -1,0 +1,39 @@
+<div class="date-title">
+    <h1 *ngIf="teeTimes.length > 0">{{teeTimes[0].startTime | date:'EEEE, MMMM d, y'}}</h1>
+</div>
+<div class="loading-spinner" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="list-container" *ngIf="teeTimes && !isLoading">
+
+    <div class="list-card" *ngFor="let teeTime of teeTimes" (click)="onClick(teeTime)">
+        <div>
+            <div class="test">
+                <div [ngClass]="getClass(teeTime.startTime)">
+                    <td width="15px" valign="top">
+                        <div>&nbsp;</div>
+                    </td>
+                </div>
+                <div class="list-card-d-container">
+                    <div [ngClass]="getCardClass(teeTime.startTime)">
+                        <h3>Tee Time</h3>
+                    </div>
+                    <div class="list-card-b2">
+                        <p *ngIf="getClass(teeTime.startTime) == 'daylight'">Daylight</p>
+                        <p *ngIf="getClass(teeTime.startTime) == 'twilight'">Twilight</p>
+                        <p>4 players</p>
+                    </div>
+
+                    <div class="list-card-b3">
+                        <h3>{{ teeTime.startTime | date:'h:mm a' }}</h3>
+                        <h3>{{ teeTime.unitPrice | currency: "USD" }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="teeTimes.length == 0 && !isLoading">
+    No Tee Times available at this time
+</div>

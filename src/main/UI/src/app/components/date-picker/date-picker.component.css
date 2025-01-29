@@ -1,0 +1,32 @@
+.custom-date-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .custom-mat-input {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .mat-form-field {
+    width: 250px;
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-fill {
+    background-color: #e3f2fd; /* Custom background color */
+  }
+  
+  .mat-datepicker-toggle {
+    color: var(--selected); /* Custom color for the calendar icon */
+  }
+  
+  .mat-calendar {
+    background: #fff; /* Custom background color for the calendar */
+  }
+  
+  .mat-calendar-header {
+    background: #007bff; /* Custom header color for the calendar */
+    color: #fff;
+  }

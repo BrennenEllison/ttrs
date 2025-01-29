@@ -1,0 +1,10 @@
+<div class="slider-container">
+  <mat-slider [min]="minTime" [max]="maxTime" [step]="step" discrete [displayWith]="formatTime">
+    <input [value]="startValue" (input)="onStartChange($event)" matSliderStartThumb>
+    <input [value]="endValue" (input)="onEndChange($event)" matSliderEndThumb>
+  </mat-slider>
+  <div class="slider-time">
+    <h3>{{ formatTime(startValue) }}</h3>
+    <h3>{{ formatTime(endValue) }}</h3>
+  </div>
+</div>

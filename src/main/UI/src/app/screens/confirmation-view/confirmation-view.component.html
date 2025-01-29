@@ -1,0 +1,31 @@
+<div class="container">
+<div class="main-container">
+    <div class="header">
+        <h1>Your Reservation is scheduled!</h1>
+        <p>Please arrive 10 minutes before your Tee Time to check in</p>
+    </div>
+
+    <div class="r-1">
+        <h2 class="r-1-title">{{ course.courseName }}</h2>
+        <div class="r-1-date">
+            <h2 class="r-1-date-time">{{ teeTime.startTime | date:'h:mm a'}}</h2>
+            <h2 class="r-1-date-date">{{ teeTime.startTime | date:'EEEE, MMMM d, y' }}</h2>
+        </div>
+        <div class="r-1-td">
+            <div class="r-1-td-col1">
+                <h2 class="r-1-td-col1-row1">Holes</h2>
+                <h2 class="r-1-td-col1-row2">{{ teeTime.holeCount }}</h2>
+            </div>
+            <div class="r-1-td-col2">
+                <h2 class="r-1-td-col2-row1">Players</h2>
+                <h2 class="r-1-td-col2-row2">2</h2>
+            </div>
+        </div>
+    </div>
+    <a href="/"><button class="button">RETURN</button></a>
+    <div class="footer">
+        <p>OR</p>
+        <p><a href="/">Schedule</a> another Tee Time.</p>
+    </div>
+</div>
+</div>

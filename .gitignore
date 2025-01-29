@@ -1,0 +1,51 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+## keys
+src/main/resources/keystore.p12
+src/main/resources/keystore.jks
+src/main/resources/applicaiton-prod.properties
+privkey.pem
+fullchain.pem
+docker-compose.yml
+ttrs-k-1.pem
+ttrs.iml
+
+src/main/ticket-generation.py
+src/main/tempCodeRunnerFile.py
+
+src/main/UI/prod.txt
+src/main/UI/entrypoint.sh
+src/main/UI/src/assets/config.js.template
+src/main/UI/src/environments

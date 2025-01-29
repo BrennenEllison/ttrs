@@ -1,0 +1,33 @@
+<div class="main-container">
+    <div class="filter-container">
+        <div class="header">
+            <h1>Filters</h1>
+        </div>
+        <div class="date-picker-container">
+            <h1>Date:</h1>
+            <app-date-picker (dateEmitter)="handleSelectedDate($event)"></app-date-picker>
+        </div>
+        <div class="time-range-container">
+            <h1>Time of day:</h1>
+            <app-time-range-selector 
+            (startTimeEmitter)="handleSelectedStartTime($event)" 
+            (endTimeEmitter)="handleSelectedEndTime($event)"></app-time-range-selector>
+            </div>
+
+        <div class="course-selector">
+            <h1>Course:</h1>
+            <mat-form-field>
+                <mat-label>Select a course</mat-label>
+                <mat-select [(value)]="selectedCourse.courseName">
+                    <mat-option *ngFor="let course of courses" required name="course.courseName" (click)="onSelectedCourse(course)" [value]="course.courseName" >{{ course.courseName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <button class="sub-btn" (click)="onSearch()">Search</button>
+        </div>
+    </div>
+    <div class="list-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="title-container">
+    <h1 class="main-title">Reservation History</h1>
+    <p class="title-p">Below is a lit of your previously scheduled tee-time reservations</p>
+</div>
+
+<div *ngIf="reservations">
+    <div>
+        <h1 class="header">Active Reservations</h1>
+    </div>
+    <div class="main-container" *ngFor="let reservation of reservations">
+        <div *ngIf="isActive(reservation.startTime) === true">
+            <div class="card-list-container active-reservation" (click)="onClickActiveCard(reservation.id)">
+                <div class="test">
+                    <div [ngClass]="getClass(reservation.startTime)">
+                        <td width="15px" valign="top">
+                            <div>&nbsp;</div>
+                        </td>
+                    </div>
+                    <div class="list-card-d-container">
+                        <div [ngClass]="getCardClass(reservation.startTime)">
+                            <h3>{{reservation.courseName}}</h3>
+                        </div>
+                        <div class="list-card-b2">
+                            <p>Start Time:</p>
+                            <p>Total Price:</p>
+                        </div>
+                        <div class="list-card-b3">
+                            <h3>{{ reservation.startTime | date:'h:mm a' }}</h3>
+                            <h3>{{ reservation.totalPrice | currency: "USD" }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="r-a-b-c" *ngIf="selectedReservation === reservation.id">
+                <button (click)="onCancelReservation(reservation)">Cancel</button>
+                <button (click)="onEditAddons(reservation)">Edit Adons</button>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="header">Previous Reservations</h1>
+    </div>
+    <div class="main-container" *ngFor="let reservation of reservations">
+        <div *ngIf="isActive(reservation.startTime) === false">
+            <div class="card-list-container">
+                <div class="test">
+                    <div [ngClass]="getClass(reservation.startTime)">
+                        <td width="15px" valign="top">
+                            <div>&nbsp;</div>
+                        </td>
+                    </div>
+                    <div class="list-card-d-container">
+                        <div [ngClass]="getCardClass(reservation.startTime)">
+                            <h3>{{reservation.courseName}}</h3>
+                        </div>
+                        <div class="list-card-b2">
+                            <p>Start Time:</p>
+                            <p>Total Price:</p>
+                        </div>
+                        <div class="list-card-b3">
+                            <h3>{{ reservation.startTime | date:'h:mm a' }}</h3>
+                            <h3>{{ reservation.totalPrice | currency: "USD" }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="title-container" *ngIf="!reservations">
+        <h1 class="message-center">No previous Reservation history available</h1>
+</div>

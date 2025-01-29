@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="main-container" *ngIf="reservation">
+        <div class="t-t-container">
+            <div class="r-1">
+                <div class="r-1-date">
+                    <h2 class="r-1-date-time">{{ reservation.teeTime.startTime | date:'h:mm a'}}</h2>
+                    <h2 class="r-1-date-date">{{ reservation.teeTime.startTime | date:'EEEE, MMMM d, y' }}</h2>
+                </div>
+                <div class="r-1-td">
+                    <div class="r-1-td-col1">
+                        <h2 class="r-1-td-col1-row1">Holes</h2>
+                        <h2 class="r-1-td-col1-row2">{{ reservation.teeTime.holeCount }}</h2>
+                    </div>
+                    <div class="r-1-td-col2">
+                        <h2 class="r-1-td-col2-row1">Players</h2>
+                        <h2 class="r-1-td-col2-row2">{{ reservation.playerCount}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a-container">
+
+            <div class="step-2-main-container">
+                <h1 class="step-2-header">Edit your Addon & Player selection</h1>
+                <p class="step-2-p">Edit your previous selected reservation addons, or addon some more!</p>
+    
+    <!------------------------| Additional Players Widget |----------------------------------------->
+                <div class="player-form">
+                    <div class="player-container">
+    
+                            <h2 class="player-container-title">Additional Players:</h2>
+    
+                        <div class="player-controller">
+                            <button class="btn-d" (click)="decrementPlayerCount()">&lt;</button>
+                            <h2>{{ reservation.playerCount }}</h2>
+                            <button class="btn-d" (click)="incrementPlayerCount()">&gt;</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div  class="addon-form">
+                    <ng-template matStepLabel>Addons</ng-template>
+                    <div class="main-addon-container">
+                        <div class="a-container">
+                            <h2>Addons:</h2>
+                            <button class="br-50"(click)="addCartItem()">+</button>
+                        </div>
+    
+                        <div *ngIf="cartItems.length > 0">
+                            <div class="addon-container" *ngFor="let item of cartItems">
+                                <button class="br-50" (click)="removeCartItem(item)">-</button>
+                                <mat-form-field class="addon-input">
+                                    <mat-label>Addon</mat-label>
+                                    <mat-select  required [(value)]="item.name">
+                                            <mat-option *ngFor="let addon of addons" [disabled]="isDisabled(addon)" [value]="addon.name" required (click)="onAddonSelection(addon, item)">{{ addon.name }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <div class="addon-controller">
+                                    <button class="btn-d btn-a" (click)="decrementItemQuantity(item)">&lt;</button>
+                                    <h2>{{ item.quantity }}</h2>
+                                    <button class="btn-d btn-a" (click)="incrementItemQuantity(item)">&gt;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button (click)="onSaveReservationAddons()">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
